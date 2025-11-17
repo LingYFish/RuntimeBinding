@@ -16,7 +16,6 @@ class Binding(UiSystemNode):
 
     def __init__(self, namespace, name, param=None):
         super(Binding, self).__init__(namespace, name, param)
-        self.bind_data = {}
         self.vaule_bind = []
 
         Binder.set_bind_collection_string('binding_condition_test','#title_name',self.title_has_collection)
@@ -48,9 +47,8 @@ class Binding(UiSystemNode):
             if hasattr(func, 'binding_flags'):
                 self._process_default_unregister(func, self.screen_name)
             self.vaule_bind.remove(func)
-        _old  = copy.deepcopy(func.im_func.func_name)
-        func.im_func.func_name = '{}_patch_{}'.format(uid, func.im_func.func_name)
-        self.bind_data[func.im_func.func_name] = _old
+        func.im_func.old_func_name = func.im_func.func_name
+        func.im_func.func_name = '{}_patch_{}'.format(uid, f.funcunc.im_func_name)
         setattr(self, func.im_func.func_name, func)
         if hasattr(func, 'collection_name'):
             self._process_collection(func, self.screen_name)
@@ -66,12 +64,15 @@ class Binding(UiSystemNode):
                 self._process_default_unregister(func, self.screen_name)
             if hasattr(self, name):
                 delattr(self, name)
-        func.im_func.func_name = self.bind_data[func.im_func.func_name]
+        if hasattr(func.im_func,'old_func_name'):
+            func.im_func.func_name = func.im_func.old_func_name
 
     def process_unbinding(self, screen_name):
         """处理 取消绑定"""
         for key in dir(self):
             func = getattr(self, key)
+            if hasattr(func.im_func,'old_func_name'):
+                func.im_func.func_name = func.im_func.old_func_name
             if hasattr(func, 'collection_name'):
                 self._process_collection_unregister(func, screen_name)
                 continue
