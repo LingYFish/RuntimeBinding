@@ -1,0 +1,15 @@
+./.mcs/
+./studio.json
+./world_icon.jpeg
+./world_behavior_packs.json
+./world_resource_packs.json
+
+.mcs/
+studio.json
+world_icon.jpeg
+world_behavior_packs.json
+world_resource_packs.json
+
+.idea
+idea/
+.vscode/

@@ -1,0 +1,305 @@
+{
+    "binding@common.base_screen": {
+        "$screen_content": "binding.root_content",
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_cancel",
+                "mapping_type": "global",
+                "to_button_id": "#screen.back"
+            }
+        ]
+    },
+    "image_button@common.button": {
+        "$default_texture|default": "textures/ui/pocket_button_default",
+        "$hover_name|default": "#button.hovered",
+        "$hover_texture|default": "textures/ui/pocket_button_hover",
+        "$left_click_name|default": "#button.left_click",
+        "$pressed_texture|default": "textures/ui/pocket_button_pressed",
+        "$right_click_name|default": "#button.right_click",
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_select",
+                "mapping_type": "pressed",
+                "to_button_id": "$left_click_name"
+            },
+            {
+                "from_button_id": "button.menu_ok",
+                "mapping_type": "focused",
+                "to_button_id": "$left_click_name"
+            },
+            {
+                "from_button_id": "button.menu_secondary_select",
+                "mapping_type": "pressed",
+                "to_button_id": "$right_click_name"
+            },
+            {
+                "from_button_id": "button.controller_select",
+                "mapping_type": "pressed",
+                "to_button_id": "$right_click_name"
+            },
+            {
+                "mapping_type": "pressed",
+                "to_button_id": "$hover_name"
+            }
+        ],
+        "controls": [
+            {
+                "default": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "$default_texture"
+                }
+            },
+            {
+                "hover": {
+                    "type": "image",
+                    "layer": 2,
+                    "texture": "$hover_texture"
+                }
+            },
+            {
+                "pressed": {
+                    "type": "image",
+                    "layer": 3,
+                    "texture": "$pressed_texture"
+                }
+            }
+        ],
+        "size": [
+            15,
+            15
+        ]
+    },
+    "namespace": "binding",
+    "root_content": {
+        "type": "panel",
+        "$collection_name" : "binding_condition_test",
+        "$setting_name|default": "SLIVER_BINDING",
+        "layer": 1,
+        "controls": [
+            {
+                "topbar": {
+                    "type": "image",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [
+                        "100%+0px",
+                        25.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "texture": "textures/ui/StoreTopBar",
+                    "controls": [
+                        {
+                            "label": {
+                                "type": "label",
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "offset": [
+                                    22.0,
+                                    -1.0
+                                ],
+                                "layer": 1,
+                                "color": "$title_text_color",
+                                "text": "$setting_name"
+                            }
+                        },
+                        {
+                            "back@binding.image_button": {
+                                "$default_texture|default": "textures/ui/back_button_default",
+                                "$hover_texture|default": "textures/ui/back_button_hover",
+                                "$left_click_name|default": "#screen.back",
+                                "$pressed_texture|default": "textures/ui/back_button_pressed",
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "layer": 2,
+                                "offset": [
+                                    2,
+                                    -1
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "content": {
+                    "type": "panel",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "size": [
+                        "100%+0px",
+                        "100%+-25px"
+                    ],
+                    "layer": 10,
+                    "controls": [
+                        {
+                            "stack_panel": {
+                                "type": "stack_panel",
+                                "size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ],
+                                "layer": 1,
+                                "orientation": "horizontal",
+                                "controls": []
+                            }
+                        },
+                        {
+                            "bg": {
+                                "type": "image",
+                                "size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "color": [
+                                    0.192,
+                                    0.196,
+                                    0.2
+                                ],
+                                "nineslice_size": [
+                                    3.0,
+                                    3.0,
+                                    3.0,
+                                    3.0
+                                ],
+                                "texture": "textures/ui/white_background",
+                                "controls": [
+                                    {
+                                        "stack_panel": {
+                                            "type": "stack_panel",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "text": "#l_n",
+                                                        "color": [
+                                                            0.95,
+                                                            0.95,
+                                                            1.0
+                                                        ],
+                                                        "property_bag": {
+                                                            "#l_n": "多么难过的哈基米才会南北绿豆"
+                                                        },
+                                                        "bindings": [
+                                                            {
+                                                                "binding_condition": "always",
+                                                                "binding_name": "#l_n"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "toggle_stack_grid": {
+                                                    "type": "stack_grid",
+                                                    "anchor_from": "top_middle",
+                                                    "anchor_to": "top_middle",
+                                                    "offset": [
+                                                        0,
+                                                        0
+                                                    ],
+                                                    "size": [
+                                                        "100%+0px",
+                                                        "100%c+0px"
+                                                    ],
+                                                    "layer": 1,
+                                                    "visible": true,
+                                                    "collection_name": "$collection_name",
+                                                    "item_count": 4,
+                                                    "orientation": "vertical",
+                                                    "controls": [
+                                                        {
+                                                            "selector_toggle@binding.title": {}
+                                                        }
+                                                    ]
+                                                }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "title": {
+        "type": "stack_panel",
+        "offset": [
+            -102.6666666666667,
+            172.6666666666667
+        ],
+        "size": [
+            "100%c+0px",
+            "100%cm+1px"
+        ],
+        "layer": 1,
+        "orientation": "horizontal",
+        "controls": [
+            {
+                "icon": {
+                    "type": "image",
+                    "size": [
+                        15.0,
+                        15.0
+                    ],
+                    "layer": 1,
+                    "visible": false,
+                    "texture": "textures/netease/common/image/default"
+                }
+            },
+            {
+                "offset": {
+                    "type": "panel",
+                    "size": [
+                        "100%c+0px",
+                        15.0
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "label": {
+                                "type": "label",
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "color": [
+                                    0.95,
+                                    0.95,
+                                    1.0
+                                ],
+                                "font_type": "default",
+                                "text": "#title_name",
+                                "text_alignment": "center",
+                                "property_bag": {
+                                    "#title_name": "哈基米哈气测试"
+                                },
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection",
+                                        "binding_collection_name": "$collection_name",
+                                        "binding_name": "#title_name"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
