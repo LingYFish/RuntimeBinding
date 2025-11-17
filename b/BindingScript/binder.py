@@ -431,3 +431,242 @@ class Binder(object):
         :rtype: None
         """
         Binder._reg_col(collection, name, func, Binder.BF_BindColor)
+
+    @staticmethod
+    def bind_button_click(name):
+        #type: (str) -> function
+        """
+        装饰器: button click 绑定
+
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding(Binder.BF_ButtonClick, name)
+
+    @staticmethod
+    def bind_button_click_up(name):
+        #type: (str) -> function
+        """
+        装饰器: button click up 绑定
+
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding(Binder.BF_ButtonClickUp, name)
+
+    @staticmethod
+    def bind_button_click_down(name):
+        #type: (str) -> function
+        """
+        装饰器: button click down 绑定
+
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding(Binder.BF_ButtonClickDown, name)
+
+    @staticmethod
+    def bind_button_click_cancel(name):
+        #type: (str) -> function
+        """
+        装饰器: button click cancel 绑定
+
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding(Binder.BF_ButtonClickCancel, name)
+
+    @staticmethod
+    def bind_interact_button_click(name):
+        #type: (str) -> function
+        """
+        装饰器: interact button click 绑定
+
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding(Binder.BF_InteractButtonClick, name)
+    @staticmethod
+    def bind_collection_button_click(collection, name):
+        #type: (str, str) -> function
+        """
+        装饰器: button click 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding_collection(Binder.BF_ButtonClick, collection, name)
+
+    @staticmethod
+    def bind_collection_button_click_up(collection, name):
+        #type: (str, str) -> function
+        """
+        装饰器: button click up 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding_collection(Binder.BF_ButtonClickUp, collection, name)
+
+    @staticmethod
+    def bind_collection_button_click_down(collection, name):
+        #type: (str, str) -> function
+        """
+        装饰器: button click down 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding_collection(Binder.BF_ButtonClickDown, collection, name)
+
+    @staticmethod
+    def bind_collection_button_click_cancel(collection, name):
+        #type: (str, str) -> function
+        """
+        装饰器: button click cancel 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding_collection(Binder.BF_ButtonClickCancel, collection, name)
+
+    @staticmethod
+    def bind_collection_interact_button_click(collection, name):
+        #type: (str, str) -> function
+        """
+        装饰器: interact button click 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :rtype: function
+        """
+        return Binder.binding_collection(Binder.BF_InteractButtonClick, collection, name)
+
+    @staticmethod
+    def set_bind_button_click(name, func):
+        #type: (str, function) -> None
+        """
+        动态注册 button click 绑定
+
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg(name, func, Binder.BF_ButtonClick)
+
+    @staticmethod
+    def set_bind_button_click_up(name, func):
+        #type: (str, function) -> None
+        """
+        动态注册 button click up 绑定
+
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg(name, func, Binder.BF_ButtonClickUp)
+
+    @staticmethod
+    def set_bind_button_click_down(name, func):
+        #type: (str, function) -> None
+        """
+        动态注册 button click down 绑定
+
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg(name, func, Binder.BF_ButtonClickDown)
+
+    @staticmethod
+    def set_bind_button_click_cancel(name, func):
+        #type: (str, function) -> None
+        """
+        动态注册 button click cancel 绑定
+
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg(name, func, Binder.BF_ButtonClickCancel)
+
+    @staticmethod
+    def set_bind_interact_button_click(name, func):
+        #type: (str, function) -> None
+        """
+        动态注册 interact button click 绑定
+
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg(name, func, Binder.BF_InteractButtonClick)
+
+    @staticmethod
+    def set_bind_collection_button_click(collection, name, func):
+        #type: (str, str, function) -> None
+        """
+        动态注册 button click 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg_col(collection, name, func, Binder.BF_ButtonClick)
+
+    @staticmethod
+    def set_bind_collection_button_click_up(collection, name, func):
+        #type: (str, str, function) -> None
+        """
+        动态注册 button click up 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg_col(collection, name, func, Binder.BF_ButtonClickUp)
+
+    @staticmethod
+    def set_bind_collection_button_click_down(collection, name, func):
+        #type: (str, str, function) -> None
+        """
+        动态注册 button click down 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg_col(collection, name, func, Binder.BF_ButtonClickDown)
+
+    @staticmethod
+    def set_bind_collection_button_click_cancel(collection, name, func):
+        #type: (str, str, function) -> None
+        """
+        动态注册 button click cancel 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg_col(collection, name, func, Binder.BF_ButtonClickCancel)
+
+    @staticmethod
+    def set_bind_collection_interact_button_click(collection, name, func):
+        #type: (str, str, function) -> None
+        """
+        动态注册 interact button click 集合绑定
+
+        :param collection: 集合名称
+        :param name: 绑定名称
+        :param func: 回调函数
+        :rtype: None
+        """
+        Binder._reg_col(collection, name, func, Binder.BF_InteractButtonClick)
