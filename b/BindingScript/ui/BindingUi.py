@@ -49,7 +49,7 @@ class Binding(UiSystemNode):
             if func in self.vaule_bind:
                 self.vaule_bind.remove(func)
         func.im_func.old_func_name = func.im_func.func_name
-        func.im_func.func_name = '{}_patch_{}'.format(uid, func.funcunc.im_func_name)
+        func.im_func.func_name = '{}_patch_{}'.format(uid, func.im_func_name)
         setattr(self, func.im_func.func_name, func)
         if hasattr(func, 'collection_name'):
             self._process_collection(func, self.screen_name)
