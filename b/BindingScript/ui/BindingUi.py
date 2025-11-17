@@ -40,13 +40,14 @@ class Binding(UiSystemNode):
 
     def addBinding(self, func):
         uid = uuid.uuid4().hex
-        if func in self.vaule_bind:
+        if func in self.vaule_bind or hasattr(func.im_func,'old_func_name'): #避免复滥用重复绑定
             """避免开头先绑定了 导致复绑定问题 我们这边处理一次取消绑定 基于网易原本实现"""
             if hasattr(func, 'collection_name'):
                 self._process_collection_unregister(func, self.screen_name)
             if hasattr(func, 'binding_flags'):
                 self._process_default_unregister(func, self.screen_name)
-            self.vaule_bind.remove(func)
+            if func in self.vaule_bind:
+                self.vaule_bind.remove(func)
         func.im_func.old_func_name = func.im_func.func_name
         func.im_func.func_name = '{}_patch_{}'.format(uid, f.funcunc.im_func_name)
         setattr(self, func.im_func.func_name, func)
@@ -72,7 +73,7 @@ class Binding(UiSystemNode):
         for key in dir(self):
             func = getattr(self, key)
             if hasattr(func.im_func,'old_func_name'):
-                func.im_func.func_name = func.im_func.old_func_name
+                func.im_func.func_name = func.im_func.old_func_name #销毁后还原
             if hasattr(func, 'collection_name'):
                 self._process_collection_unregister(func, screen_name)
                 continue
