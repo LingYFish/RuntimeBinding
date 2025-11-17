@@ -40,55 +40,72 @@ class Binding(UiSystemNode):
 
     def addBinding(self, func):
         uid = uuid.uuid4().hex
-        if func in self.vaule_bind or hasattr(func.im_func,'old_func_name'): #避免复滥用重复绑定
-            """避免开头先绑定了 导致复绑定问题 我们这边处理一次取消绑定 基于网易原本实现"""
-            if hasattr(func, 'collection_name'):
-                self._process_collection_unregister(func, self.screen_name)
-            if hasattr(func, 'binding_flags'):
-                self._process_default_unregister(func, self.screen_name)
+        is_method = hasattr(func, "im_func")
+        real_func = func.im_func if is_method else func
+        name_attr = "func_name" if is_method else "__name__"
+
+        old_flag = hasattr(real_func, "old_func_name")
+        in_bind = func in self.vaule_bind
+
+        if in_bind or old_flag:
+            self.unBinding(func)
             if func in self.vaule_bind:
                 self.vaule_bind.remove(func)
-        func.im_func.old_func_name = func.im_func.func_name
-        func.im_func.func_name = '{}_patch_{}'.format(uid, func.im_func.func_name)
-        setattr(self, func.im_func.func_name, func)
-        if hasattr(func, 'collection_name'):
+        old_name = getattr(real_func, name_attr)
+        setattr(real_func, "old_func_name", old_name)
+        new_name = "{}_patch_{}".format(uid, old_name)
+        setattr(real_func, name_attr, new_name)
+        setattr(self, new_name, func)
+        if hasattr(func, "collection_name"):
             self._process_collection(func, self.screen_name)
-        if hasattr(func, 'binding_flags'):
+        if hasattr(func, "binding_flags"):
             self._process_default(func, self.screen_name)
+        if func not in self.vaule_bind:
+            self.vaule_bind.append(func)
 
     def unBinding(self, func):
-        name = func.im_func.func_name
-        if name:
-            if hasattr(func, 'collection_name'):
-                self._process_collection_unregister(func, self.screen_name)
-            if hasattr(func, 'binding_flags'):
-                self._process_default_unregister(func, self.screen_name)
-            if hasattr(self, name):
-                delattr(self, name)
-        if hasattr(func.im_func,'old_func_name'):
-            func.im_func.func_name = func.im_func.old_func_name
+        is_method = hasattr(func, "im_func")
+        real_func = func.im_func if is_method else func
+        name_attr = "func_name" if is_method else "__name__"
+        name = getattr(real_func, name_attr, None)
+        if not name:
+            return
+        if hasattr(func, "collection_name"):
+            self._process_collection_unregister(func, self.screen_name)
+        if hasattr(func, "binding_flags"):
+            self._process_default_unregister(func, self.screen_name)
+        if hasattr(self, name):
+            delattr(self, name)
+        if hasattr(real_func, "old_func_name"):
+            setattr(real_func, name_attr, real_func.old_func_name)
+            delattr(real_func, "old_func_name")
+        if func in self.vaule_bind:
+            self.vaule_bind.remove(func)
 
     def process_unbinding(self, screen_name):
-        """处理 取消绑定"""
         for key in dir(self):
             func = getattr(self, key)
-            if hasattr(func.im_func,'old_func_name'):
-                func.im_func.func_name = func.im_func.old_func_name #销毁后还原
-            if hasattr(func, 'collection_name'):
+            is_method = hasattr(func, "im_func")
+            real_func = func.im_func if is_method else func
+            name_attr = "func_name" if is_method else "__name__"
+            if hasattr(real_func, "old_func_name"):
+                setattr(real_func, name_attr, real_func.old_func_name)
+                delattr(real_func, "old_func_name")
+            if hasattr(func, "collection_name"):
                 self._process_collection_unregister(func, screen_name)
                 continue
-            if hasattr(func, 'binding_flags'):
+            if hasattr(func, "binding_flags"):
                 self._process_default_unregister(func, screen_name)
                 continue
 
     def process_binding(self, screen_name):
-        """处理 绑定"""
         for key in dir(self):
             func = getattr(self, key)
-            self.vaule_bind.append(func)
-            if hasattr(func, 'collection_name'):
+            if func not in self.vaule_bind:
+                self.vaule_bind.append(func)
+            if hasattr(func, "collection_name"):
                 self._process_collection(func, screen_name)
                 continue
-            if hasattr(func, 'binding_flags'):
+            if hasattr(func, "binding_flags"):
                 self._process_default(func, screen_name)
                 continue
