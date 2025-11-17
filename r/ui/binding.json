@@ -73,7 +73,7 @@
     "namespace": "binding",
     "root_content": {
         "type": "panel",
-        "$collection_name" : "binding_condition_test",
+        "$collection_name": "binding_condition_test",
         "$setting_name|default": "SLIVER_BINDING",
         "layer": 1,
         "controls": [
@@ -185,12 +185,12 @@
                                                         "type": "label",
                                                         "anchor_from": "top_left",
                                                         "anchor_to": "top_left",
-                                                        "text": "#l_n",
                                                         "color": [
                                                             0.95,
                                                             0.95,
                                                             1.0
                                                         ],
+                                                        "text": "#l_n",
                                                         "property_bag": {
                                                             "#l_n": "多么难过的哈基米才会南北绿豆"
                                                         },
@@ -204,28 +204,28 @@
                                                 },
                                                 {
                                                     "toggle_stack_grid": {
-                                                    "type": "stack_grid",
-                                                    "anchor_from": "top_middle",
-                                                    "anchor_to": "top_middle",
-                                                    "offset": [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    "size": [
-                                                        "100%+0px",
-                                                        "100%c+0px"
-                                                    ],
-                                                    "layer": 1,
-                                                    "visible": true,
-                                                    "collection_name": "$collection_name",
-                                                    "item_count": 4,
-                                                    "orientation": "vertical",
-                                                    "controls": [
-                                                        {
-                                                            "selector_toggle@binding.title": {}
-                                                        }
-                                                    ]
-                                                }
+                                                        "type": "stack_grid",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "size": [
+                                                            "100%+0px",
+                                                            "100%c+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "visible": true,
+                                                        "collection_name": "$collection_name",
+                                                        "item_count": 4,
+                                                        "orientation": "vertical",
+                                                        "controls": [
+                                                            {
+                                                                "selector_toggle@binding.title": {}
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }

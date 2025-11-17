@@ -1,5 +1,5 @@
 import mod.client.extraClientApi as clientApi
-import traceback, uuid
+import traceback, uuid, copy
 from ..base.ui import UiSystemNode
 from controls.binder import Binder
 compFactory = clientApi.GetEngineCompFactory()
@@ -48,8 +48,9 @@ class Binding(UiSystemNode):
             if hasattr(func, 'binding_flags'):
                 self._process_default_unregister(func, self.screen_name)
             self.vaule_bind.remove(func)
-        self.bind_data[func.im_func.func_name] = '{}_patch_{}'.format(uid, func.im_func.func_name)
+        _old  = copy.deepcopy(func.im_func.func_name)
         func.im_func.func_name = '{}_patch_{}'.format(uid, func.im_func.func_name)
+        self.bind_data[func.im_func.func_name] = _old
         setattr(self, func.im_func.func_name, func)
         if hasattr(func, 'collection_name'):
             self._process_collection(func, self.screen_name)
@@ -57,7 +58,7 @@ class Binding(UiSystemNode):
             self._process_default(func, self.screen_name)
 
     def unBinding(self, func):
-        name = self.bind_data.get(func.im_func.func_name)
+        name = func.im_func.func_name
         if name:
             if hasattr(func, 'collection_name'):
                 self._process_collection_unregister(func, self.screen_name)
@@ -65,6 +66,7 @@ class Binding(UiSystemNode):
                 self._process_default_unregister(func, self.screen_name)
             if hasattr(self, name):
                 delattr(self, name)
+        func.im_func.func_name = self.bind_data[func.im_func.func_name]
 
     def process_unbinding(self, screen_name):
         """处理 取消绑定"""
